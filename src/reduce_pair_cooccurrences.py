@@ -25,11 +25,9 @@ for line in sys.stdin:
        cooccurrence_sum = 0
        for count in counts:
           cooccurrence_sum += int(count)
-
     # 1st pair or same pair as before
-    else:
-      for count in counts:
-         cooccurrence_sum += int(count)
-
+   else:
+       for count in counts:
+           cooccurrence_sum += int(count)
     # update working pair
-    last_pair = current_pair
+   last_pair = current_pair

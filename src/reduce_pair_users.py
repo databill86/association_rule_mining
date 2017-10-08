@@ -26,7 +26,6 @@ for line in sys.stdin:
         except:
             continue
 
-print(movies_reviewed)
 # aggregated all the movies reviewed by user u
 # now emit movie reviewed pairs
 # pairs should be sorted so pair(a,b) is never (b,a)
