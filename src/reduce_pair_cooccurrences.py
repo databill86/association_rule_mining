@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 import sys
 import ast
+import heapq
 
+top_20_dict = {}
 cooccurrence_sum = 0
 current_pair = None
 last_pair = None
@@ -22,6 +24,7 @@ for line in sys.stdin:
    # emit previous pair and restart sum
    if current_pair and (current_pair != last_pair):
        print(last_pair, cooccurrence_sum)
+       top_20_dict[last_pair] = cooccurrence_sum
        cooccurrence_sum = 0
        for count in counts:
           cooccurrence_sum += int(count)
