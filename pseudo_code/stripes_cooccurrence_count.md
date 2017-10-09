@@ -1,4 +1,4 @@
-class Mapper:
+llclass Mapper:
     method Map_Users(userid u, movieid m, reviews r):
         H = new AssociativeArray
         for all rating i in reviews r:
