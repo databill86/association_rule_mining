@@ -1,6 +1,8 @@
 class Mapper:
-    method Map_Users(userid u, movieid m, rating i):
-        Emit(userid u, m)
+    # data has been cleaned so only high ratings are input
+    method Map_Users(userid u, movieid m, reviews r):
+        for all rating i in reviews r:
+            Emit(userid u, m)
 
 class Reducer:
     method Reduce_Users(userid u, movieids[m1, m2, ...]):
