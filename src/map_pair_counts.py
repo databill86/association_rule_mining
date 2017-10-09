@@ -6,6 +6,6 @@ for line in sys.stdin:
     try:
         user_id = int(fields[0])
         movie_id = int(fields[1])
-        print('{}\t{}'.format(user_id, movie_id))
+        print('{}\t{}'.format(user_id, [movie_id]))
     except ValueError:
         continue
