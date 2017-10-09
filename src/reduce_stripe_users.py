@@ -1,35 +1,78 @@
 #! /usr/bin/env python
 import sys
 import ast
-# import itertools
+from collections import defaultdict
 
+# dictionary of int dictionaries that initialize with zero, does not pickle
+# does hadoop need to pickle for multiprocessing?
+# dict_of_dicts[movie_i][movie_j] = number of cooccurrences
+stripes_dict = defaultdict(lambda: defaultdict(int))
+
+# key = (movie_i, movie_j), value = cooccurrences
+# movies_reviewed = defaultdict(int)
+current_user = None
+last_user = None
 movies_reviewed = []
-#input from STDIN
-# userid \t movieids list [m1, m2, ...]
-for line in sys.stdin:
-    # need to see how to check if list was sent or not
-    # can user list(itertools.chain.from_iterable(some_list))
-    user, movies = line.split('\t', 1)
-    try:
-        user = int(user)
-
-        # lists are emited as string eg '[1,2,3]'
-        movie_ids = ast.literal_eval(movies)
-
-    except ValueError:
-        continue
-
-    for movie_id in movie_ids:
-        movies_reviewed.append(movie_id)
 
 # aggregated all the movies reviewed by user u
 # now emit movie reviewed pairs
 # pairs should be sorted so pair(a,b) is never (b,a)
-movies_reviewed = sorted(movies_reviewed)
+def add_movies_to_dict(reviewed_movies, movies_dict):
+    sorted_movies = sorted(reviewed_movies)
+    for i in range(0, len(sorted_movies)):
+        id_i = sorted_movies[i]
+        j_start = i + 1
+        for j in range(j_start, len(sorted_movies)):
+            id_j = sorted_movies[j]
+            movies_dict[id_i][id_j] += 1
+    return movies_dict
 
-for i in range(0, len(movies_reviewed)):
-    id_i = movies_reviewed[i]
-    j_start = id_i + 1
-    for j in range(j_start, len(movies_reviewed)):
-        id_j = movies_reviewed[j]
-        print("({},{})\t{}".format(id_i, id_j, [1]))
+def process_input(user, movies):
+    usr = int(user)
+    # lists are emited as string eg '[1,2,3]'
+    m_ids = ast.literal_eval(movies)
+    return usr, m_ids
+
+#input from STDIN
+# userid \t movieids [m1, m2, ..]
+for line in sys.stdin:
+    verbose = True
+    if verbose:
+        print(line)
+    # need to see how to check if list was sent or not
+    # can user list(itertools.chain.from_iterable(some_list))
+    user, movies = line.split('\t', 1)
+    assert( 1, [1,2] == process_input(1, '[1,2]'))
+
+    try:
+        current_user, movie_ids = process_input(user, movies)
+        if verbose:
+            print("try successful")
+            print("userid:{}\t movieids:{}".format(current_user, movie_ids))
+
+    except ValueError:
+        if verbose:
+            print("value error")
+        continue
+
+    # normally check for boundaries but doesnt help in this case, user_id
+    if last_user and (current_user != last_user):
+        stripes_dict = add_movies_to_dict(movies_reviewed, stripes_dict)
+        if verbose:
+            print("new user")
+        movies_reviewed = [movie_id for movie_id in movie_ids]
+
+    # previous user
+    else:
+        if verbose:
+            print("previous_user")
+        for movie_id in movie_ids:
+            movies_reviewed.append(movie_id)
+
+    last_user = current_user
+
+# last user
+stripes_dict = add_movies_to_dict(movies_reviewed, stripes_dict)
+for movie_i, stripe in stripes_dict.items():
+    print("{}\t{}".format(movie_i, stripe))
+    
