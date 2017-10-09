@@ -38,12 +38,12 @@ def process_input(user, movies):
 for line in sys.stdin:
     verbose = True
     if verbose:
+        print("line")
         print(line)
     # need to see how to check if list was sent or not
     # can user list(itertools.chain.from_iterable(some_list))
     user, movies = line.split('\t', 1)
-    assert( 1, [1,2] == process_input(1, '[1,2]'))
-
+#    assert( 1, [1,2] == process_input(1, '[1,2]'))
     try:
         current_user, movie_ids = process_input(user, movies)
         if verbose:
@@ -73,6 +73,6 @@ for line in sys.stdin:
 
 # last user
 stripes_dict = add_movies_to_dict(movies_reviewed, stripes_dict)
-for movie_i, stripe in stripes_dict.items():
-    print("{}\t{}".format(movie_i, stripe))
+for movie_i in stripes_dict.keys():
+    print("{}\t{}".format(movie_i, list(stripes_dict[movie_i].items())))
     
