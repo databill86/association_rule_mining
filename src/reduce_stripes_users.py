@@ -36,7 +36,7 @@ def process_input(user, movies):
 #input from STDIN
 # userid \t movieids [m1, m2, ..]
 for line in sys.stdin:
-    verbose = True
+    verbose = False
     if verbose:
         print("line")
         print(line)

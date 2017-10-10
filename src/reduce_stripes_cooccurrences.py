@@ -8,14 +8,22 @@ import heapq
 cooccurrence_sum = 0
 current_id = None
 last_id = None
-stripes_dict = defaultdict(lambda: defaultdict(int))
+# dictionary of dictionaries with default value pf 0
+#stripes_dict = defaultdict(lambda: defaultdict(int))
+pair_dict = defaultdict(int)
 
-def increment_stripes(s_dict, i_id, new_stripe):
+def emit_stripe(pair_dict):
+    for pair, count in pair_dict.items():
+        print("{}\t{}".format(pair,count))
+
+def increment_stripes(pair_dict, i_id, new_stripe):
+    # stripe is a list of tups, [(id_j1, n1), (id_j2, n2), ...]
     for tup in new_stripe:
-
-        s_dict[i_id] 
-
-
+        j_id = tup[0]
+        count = tup[1]
+        pair = (i_id, j_id)
+        pair_dict[pair] += count
+    return pair_dict
 
 # expecting input as id_i \t [(id_j1, n1), (id_j2, n2)]
 for line in sys.stdin:
@@ -27,18 +35,18 @@ for line in sys.stdin:
    except ValueError:
        continue
    
-   # not first item and its a new pair
    # new boundary detected
+   # not first id and new id
    # emit previous pair and restart sum
    if current_id and (current_id != last_id):
-       print(last_pair, cooccurrence_sum)
-       top_20_dict[last_pair] = cooccurrence_sum
-       cooccurrence_sum = 0
-       for count in counts:
-          cooccurrence_sum += int(count)
+       emit_stripe(pair_dict)
+       #top_20_dict[last_pair] = cooccurrence_sum
+       pair_dict = increment_stripes(defaultdict(int), current_id, stripe)
+
     # 1st pair or same pair as before
    else:
-       for count in counts:
-           cooccurrence_sum += int(count)
+       pair_dict = increment_stripes(defaultdict(int), current_id, stripe)
     # update working pair
-   last_pair = current_pair
+   last_id = current_id
+
+emit_stripe(pair_dict)
