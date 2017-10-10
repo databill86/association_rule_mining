@@ -2,15 +2,16 @@
 import sys
 import ast
 from collections import defaultdict
+from collections import Counter
 import heapq
 
-
-cooccurrence_sum = 0
 current_id = None
 last_id = None
 # dictionary of dictionaries with default value pf 0
 #stripes_dict = defaultdict(lambda: defaultdict(int))
 pair_dict = defaultdict(int)
+
+top_20 = True
 
 def emit_stripe(pair_dict):
     for pair, count in pair_dict.items():
@@ -39,14 +40,23 @@ for line in sys.stdin:
    # not first id and new id
    # emit previous pair and restart sum
    if current_id and (current_id != last_id):
-       emit_stripe(pair_dict)
+       if not top_20:
+           emit_stripe(pair_dict)
+           pair_dict = defaultdict(int)
        #top_20_dict[last_pair] = cooccurrence_sum
-       pair_dict = increment_stripes(defaultdict(int), current_id, stripe)
+       pair_dict = increment_stripes(pair_dict, current_id, stripe)
 
     # 1st pair or same pair as before
    else:
-       pair_dict = increment_stripes(defaultdict(int), current_id, stripe)
+       pair_dict = increment_stripes(pair_dict, current_id, stripe)
     # update working pair
    last_id = current_id
+if top_20:
+    # counter is easier to work with
+    #pair_dict = dict(Counter(pair_dict).most_common(20))
+    # heap would be faster though especially with the full sized set
+    k_keys = heapq.nlargest(20, pair_dict, key=pair_dict.get)
+    pair_dict = {k: pair_dict[k] for k in k_keys}
+
 
 emit_stripe(pair_dict)
