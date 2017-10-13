@@ -11,7 +11,7 @@ last_id = None
 stripes_dict = defaultdict(lambda: defaultdict(int))
 pair_dict = defaultdict(int)
 
-top_20 = True
+top_20 = False
 
 def emit_stripe(pair_dict):
     for pair, count in pair_dict.items():
