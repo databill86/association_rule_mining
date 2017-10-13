@@ -10,8 +10,7 @@ last_user = None
 # aggregated all the movies reviewed by user u
 # now emit movie reviewed pairs
 # pairs should be sorted so pair(a,b) is never (b,a)
-def emit_movies_reviewed(reviewed_movies):
-    sorted_movies = sorted(reviewed_movies)
+def emit_movies_reviewed(sorted_movies):
     for i in range(0, len(sorted_movies)):
         id_i = sorted_movies[i]
         j_start = i + 1
@@ -42,7 +41,7 @@ for line in sys.stdin:
 
     # new user, not first not first instance
     if last_user and (current_user != last_user):
-        emit_movies_reviewed(movies_reviewed)
+        emit_movies_reviewed(sorted(movies_reviewed))
         if verbose:
             print("new user")
         movies_reviewed = []

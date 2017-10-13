@@ -8,7 +8,7 @@ import heapq
 current_id = None
 last_id = None
 # dictionary of dictionaries with default value pf 0
-#stripes_dict = defaultdict(lambda: defaultdict(int))
+stripes_dict = defaultdict(lambda: defaultdict(int))
 pair_dict = defaultdict(int)
 
 top_20 = True
@@ -51,6 +51,7 @@ for line in sys.stdin:
        pair_dict = increment_stripes(pair_dict, current_id, stripe)
     # update working pair
    last_id = current_id
+
 if top_20:
     # counter is easier to work with
     #pair_dict = dict(Counter(pair_dict).most_common(20))
