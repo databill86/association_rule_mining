@@ -25,6 +25,10 @@ movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1], 
 # group movies (m1, (m2, m4))
 grouped_movies = movie_pairs.groupByKey().map(lambda x: (x[0], list(x[1])))
 
+movie_counts = grouped_movies.flatMap(dict_count).groupByKey()
+
+# am i done here?
+
 # now i need to count
 
 def dict_counts(movie_stripes):
@@ -39,8 +43,6 @@ def dict_counts(movie_stripes):
     # this doesnt work
     # extend keeps the list flat, the first items call returns a list of turls with inner dicts
     # the vaues of the 
-    [key_pair_list.extend(stripe_dict.items()[i][1].items()) for i in xrange(0,len(s_dict.items()))]
- [l.extend((s_dict.items()[i][0], s_dict.items()[i][1].items())) for i in xrange(0, len(s_dict.items()))]   
+# dict of dicts so I am doing a two level for loop, thj0 is the second dict index, j1 is the value ati and j
 
-
-    return
+    return [((i, j[0], j[1]) for i, j_dict in stripe_dict.items() for j in j_dict.items()]
