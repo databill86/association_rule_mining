@@ -27,6 +27,7 @@ grouped_movies = movie_pairs.groupByKey().map(lambda x: (x[0], list(x[1])))
 
 movie_counts = grouped_movies.flatMap(dict_count).groupByKey()
 
+# there should probably be a reduce action somehwere here instead of doing what i did below:wq
 # am i done here?
 
 # now i need to count
