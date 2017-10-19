@@ -11,16 +11,20 @@ header = data.first()
 # take out header
 data = data.filter(lambda x: x != header)
 
-
 # need to convert list of strings to key value pairs
-user_pairs = data.map(lambda x: x.split(",")
+user_pairs = data.map(lambda x: x.split(","))
 
 # grouped pairs [(u, [sortedmovies]_]
-grouped_users = user_pairs.groupByKey().map(lambda x: (x[0], sorted(x[1]))
+grouped_users = user_pairs.groupByKey().map(lambda x: (x[0], sorted(x[1])))
 
 # need movies as keys and to expand the combinations of movies watched
 # need (m1, m2), (m1, m4) vice [u1, (m1,m2,m4)] 
 movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1], 2)))
+# [((m1, m2), 1), ... ]
+movie_pairs_ones = movie_pairs.map(lambda x: (x, 1))
+
+# [((m1,m2), count), ... ] ; x and y are values vij and vij+1
+stripes = movie_pairs_ones.reduceByKey(lambda x,y: x+y)
 
 # group movies (m1, (m2, m4))
 grouped_movies = movie_pairs.groupByKey().map(lambda x: (x[0], list(x[1])))
