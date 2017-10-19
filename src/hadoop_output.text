@@ -1,8 +1,7 @@
-17/10/18 23:36:19 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
-17/10/18 23:36:19 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-packageJobJar: [/home/sarmstr5/hw2/src/map_pair_counts.py, /home/sarmstr5/hw2/src/reduce_pair_users.py, /home/sarmstr5/hw2/src/reduce_pair_cooccurrences.py, /tmp/hadoop-unjar3318482487446085123/] [] /tmp/streamjob5937040655941010535.jar tmpDir=null
-17/10/18 23:36:24 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
-17/10/18 23:36:25 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
-17/10/18 23:36:29 INFO mapreduce.JobSubmitter: Cleaning up the staging area /tmp/hadoop-yarn/staging/sarmstr5/.staging/job_1507601822748_0779
-17/10/18 23:36:29 ERROR streaming.StreamJob: Error Launching job : Input path does not exist: hdfs://mri-head:8020/user/sarmstr5/input/ratings.csv
+17/10/19 12:52:52 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+17/10/19 12:52:52 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+packageJobJar: [/home/sarmstr5/hw2/src/map_pair_counts.py, /home/sarmstr5/hw2/src/reduce_pair_users.py, /home/sarmstr5/hw2/src/reduce_pair_cooccurrences.py, /tmp/hadoop-unjar8651997650370403887/] [] /tmp/streamjob8091847700919254008.jar tmpDir=null
+17/10/19 12:52:55 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/19 12:52:55 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/19 12:52:56 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://mri-head:8020/user/sarmstr5/output_pairs2 already exists
 Streaming Command Failed!
