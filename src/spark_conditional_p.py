@@ -34,7 +34,7 @@ def main():
     grouped_users_rdd = user_pairs.groupByKey().map(lambda x: (x[0], sorted(x[1]))).collect()
 
     # creates list of all movies, the creates a dictionary
-    movie_counts = grouped_users.flatMap(lambda x: x[1]).countByValue()
+    movie_counts_dict = grouped_users.flatMap(lambda x: x[1]).countByValue()
 
     # need movies as keys and to expand the combinations of movies watched
     # combinations should keep sorted order

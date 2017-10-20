@@ -3,8 +3,9 @@ import csv
 import pandas as pd
 import numpy as np
 
-r_fn = "data/ratings.csv"
-w_fn = "data/ratings_processed.csv"
+base_dir = "/home/ubuntu/hw2/data/"
+r_fn = os.path.join(base_dir, "ratings.csv")
+w_fn = os.path.join(base_dir, "ratings_processed.csv")
 with open(w_fn, 'w') as output:
     wr = csv.writer(output)
     with open(r_fn, 'rt') as input:
