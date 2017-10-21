@@ -11,7 +11,7 @@ def save_default_dict(dict_file, fn):
 
 def main():
     # initialize spark
-    conf = SparkConf().setMaster("local").setAppName("test_spark.py")
+    conf = SparkConf().setMaster("local").setAppName("spark_conditional_p.py")
     sc = SparkContext(conf = conf)
 
     # read in file
@@ -51,24 +51,13 @@ def main():
     # Perform calc
     conditional_probs_l = keys_rdd.map(lambda k: float(stripe_count_dict[k]) /
                                        movie_counts_dict[k[1]])
-    
-
-#    for k, n_intersect in s_counts.iteritems():
-#        i,j = k
-#        n_b = float(movie_counts_dict[j])
-#        print("P{}\t|{}&{}|:{}\t|{}|:{}".format(k, i, j, n_itersect, n_b))
-
 
 if __name__ == "__main__":
     main()
 
-# ---- not needed ---- #
-# add ones to pairs to reduce
-# added sort just in case probably not necessary, its assocative and communitive
-# [((m1, m2), 1), ... ]
-# movie_pairs_ones = movie_pairs.map(lambda x: (sorted(x), 1))
-
-# [((m1,m2), count), ... ]
-# x and y are values vij and vij+1
-# stripes = movie_pairs_ones.reduceByKey(lambda x,y: x+y)
+# ---- not needed-------#
+#    for k, n_intersect in s_counts.iteritems():
+#        i,j = k
+#        n_b = float(movie_counts_dict[j])
+#        print("P{}\t|{}&{}|:{}\t|{}|:{}".format(k, i, j, n_itersect, n_b))
 

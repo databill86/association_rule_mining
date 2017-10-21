@@ -1,9 +1,11 @@
 import findspark
 findspark.init()
+
 from pyspark import SparkContext
 from pyspark import SparkConf
 import itertools
 from collections import defaultdict
+import os
 
 def save_default_dict(dict_file, fn):
     with open(fn, 'wb') as output:
@@ -12,14 +14,20 @@ def save_default_dict(dict_file, fn):
         for k,v in dict_file.iteritems():
             w.writerow([k,v])
 
+def get_abs_file_path(file_dir, fn):
+    cur_dir = os.path.abspath(os.curdir)
+    return os.path.normpath(os.path.join(cur_dir, "..", file_dir, fn))
+
 def main():
     # initialize spark
-    conf = SparkConf().setMaster("local").setAppName("test_spark.py")
+    conf = SparkConf().setMaster("local").setAppName("spark_cooccurrences.py")
     sc = SparkContext(conf = conf)
 
     # read in file
-    fn = "hw2/test_input/ratings_tiny_processed.csv"
-    data = sc.textFile(fn)
+    input_dir = "test_input"
+    input_fn = "ratings_tiny_processed.csv"
+    input_file_path = get_abs_file_path(input_dir, input_fn)
+    data = sc.textFile(input_file_path)
 
     # take out header
     header = data.first()
@@ -40,6 +48,13 @@ def main():
 
     # Count pairs
     stripe_count_dict = movie_pairs.countByValue()
+
+    # Output results
+    output_dir = "output"
+    output_fn = "tiny_run.csv"
+    output_path = get_abs_file_path(output_dir, output_fn)
+    save_default_dict(stripe_count_dict, output_path)
+    print("saving cooccurrence counts")
 
 if __name__ == "__main__":
     main()
