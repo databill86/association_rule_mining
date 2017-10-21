@@ -54,3 +54,4 @@ packageJobJar: [/home/sarmstr5/hw2/src/map_stripes_counts.py, /home/sarmstr5/hw2
 17/10/21 11:53:49 INFO mapreduce.Job:  map 100% reduce 80%
 17/10/21 11:54:13 INFO mapreduce.Job:  map 100% reduce 81%
 17/10/21 11:54:35 INFO mapreduce.Job:  map 100% reduce 82%
+17/10/21 11:54:59 INFO mapreduce.Job:  map 100% reduce 83%
