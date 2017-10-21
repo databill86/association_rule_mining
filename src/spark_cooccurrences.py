@@ -1,4 +1,7 @@
-from pyspark import sparkContext, SparkConf
+import findspark
+findspark.init()
+from pyspark import SparkContext
+from pyspark import SparkConf
 import itertools
 from collections import defaultdict
 
