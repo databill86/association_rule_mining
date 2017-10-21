@@ -1,0 +1,42 @@
+
+real	0m40.945s
+user	0m8.637s
+sys	0m1.128s
+
+real	0m11.518s
+user	0m5.366s
+sys	0m0.804s
+
+real	0m14.872s
+user	0m7.212s
+sys	0m0.901s
+
+#full run
+real	26m0.660s
+user	0m14.569s
+sys	0m1.704s
+
+#full run
+real	0m40.945s
+user	0m8.637s
+sys	0m1.128s
+
+real	0m11.518s
+user	0m5.366s
+sys	0m0.804s
+
+real	0m14.872s
+user	0m7.212s
+sys	0m0.901s
+# input/ratings_processed.csv
+# input/eighth_file.csv
+
+real	12m38.019s
+user	0m11.183s
+sys	0m1.300s
+# input/sixteenth_file.csv
+
+real	3m46.381s
+user	0m9.927s
+sys	0m1.169s
+# input/quarter_file.csv

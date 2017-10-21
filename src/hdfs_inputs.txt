@@ -1,0 +1,10 @@
+Found 9 items
+-rw-------   3 sarmstr5 hadoop   28690615 2017-10-20 22:50 input/eighth_file.csv
+-rw-------   3 sarmstr5 hadoop  119918080 2017-10-20 22:50 input/five_eighths_file.csv
+-rw-------   3 sarmstr5 hadoop  119918080 2017-10-20 22:50 input/half_file.csv
+-rw-------   3 sarmstr5 hadoop  119918080 2017-10-20 22:50 input/nine_sixs_file.csv
+-rw-------   3 sarmstr5 hadoop   58201273 2017-10-20 22:50 input/quarter_file.csv
+-rw-------   3 sarmstr5 hadoop  119918080 2017-10-13 13:32 input/ratings_processed.csv
+-rw-------   3 sarmstr5 hadoop     552258 2017-10-19 12:43 input/ratings_small_processed.csv
+-rw-------   3 sarmstr5 hadoop   13933890 2017-10-20 22:50 input/sixteenth_file.csv
+-rw-------   3 sarmstr5 hadoop  119918080 2017-10-20 22:50 input/three_quarter_file.csv
