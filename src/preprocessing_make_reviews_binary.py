@@ -1,7 +1,13 @@
 import os
 import csv
-import pandas as pd
-import numpy as np
+import sys
+
+#verbose = False
+#r_fn = sys.argv[1] 
+#w_fn = "../{}_processed.csv".format(r_fn.split(".csv")[0])
+#if verbose:
+#    print(r_fn)
+#    print(w_fn)
 
 base_dir = "/home/ubuntu/hw2/data/"
 r_fn = os.path.join(base_dir, "ratings.csv")
@@ -11,6 +17,8 @@ with open(w_fn, 'w') as output:
     with open(r_fn, 'rt') as input:
         header = True
         for row in csv.reader(input):
+            if verbose:
+                print(row)
             if header:
                 wr.writerow(row[:2])
                 header = False

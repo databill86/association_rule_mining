@@ -23,6 +23,12 @@ def get_abs_file_path(file_dir, fn):
     cur_dir = os.path.abspath(os.curdir)
     return os.path.normpath(os.path.join(cur_dir, "..", file_dir, fn))
 
+def save_to_disk(output_dir, output_fn, rdd):
+    output_path = get_abs_file_path(output_dir, output_fn)
+    stripe_count_rdd.saveAsTextFile(output_path)
+    #save_default_dict(stripe_count_dict, output_path)
+    #print("saving cooccurrence counts")
+
 def main():
     # initialize spark
     conf = SparkConf().setMaster("local").setAppName("spark_cooccurrences.py")
@@ -59,10 +65,7 @@ def main():
     # Output results
     output_dir = "output"
     output_fn = "one_half"
-    output_path = get_abs_file_path(output_dir, output_fn)
-    stripe_count_rdd.saveAsTextFile(output_path)
-    #save_default_dict(stripe_count_dict, output_path)
-    #print("saving cooccurrence counts")
+    save_to_disk(output_dir, output_fn, stripe_count_rdd)
 
 if __name__ == "__main__":
     main()
