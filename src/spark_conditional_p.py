@@ -21,13 +21,15 @@ def main():
     # int, dont count header
     n_reviews = data.count() - 1 
 
+    
     # take out header
     header = data.first()
     data = data.filter(lambda x: x != header)
 
     # need to convert list of strings to key value pairs
     #[[u1, mi], ..]
-    user_pairs_rdd = data.map(lambda x: [int(i) for i in x.split(",")]).persist()
+    user_pairs_rdd = data.map(lambda x: [int(i) for i in
+                                         x.split(",")]).persist(StorageLevel.RY_AND_DISK)
 
     # default dict of count times each movie got a high review
     # {keyi: n_i, ....}

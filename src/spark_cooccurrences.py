@@ -6,13 +6,16 @@ from pyspark import SparkConf
 import itertools
 from collections import defaultdict
 import os
+import csv
 
-def save_default_dict(dict_file, fn):
+def save_default_dict(count_generator, fn):
     with open(fn, 'wb') as output:
         w = csv.writer(output)
         w.writerow(["m1_m2","counts"])
-        for k,v in dict_file.iteritems():
-            w.writerow([k,v])
+        for k,v in count_generator:
+            key_pair = k[0]
+            count = k[1]
+            w.writerow([key_pair, count])
 
 def get_abs_file_path(file_dir, fn):
     cur_dir = os.path.abspath(os.curdir)
@@ -24,8 +27,8 @@ def main():
     sc = SparkContext(conf = conf)
 
     # read in file
-    input_dir = "test_input"
-    input_fn = "ratings_tiny_processed.csv"
+    input_dir = "data"
+    input_fn = "one_half.csv"
     input_file_path = get_abs_file_path(input_dir, input_fn)
     data = sc.textFile(input_file_path)
 
@@ -47,14 +50,17 @@ def main():
     movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1], 2)))
 
     # Count pairs
-    stripe_count_dict = movie_pairs.countByValue()
+    stripe_count_rdd = sc.parallelize(((k,v) for k,v in
+                                       movie_pairs.countByValue().iteritems()))
+    #stripe_count_rdd = sc.parallelize(stripe_count_gen)
 
     # Output results
     output_dir = "output"
-    output_fn = "tiny_run.csv"
+    output_fn = "one_half"
     output_path = get_abs_file_path(output_dir, output_fn)
-    save_default_dict(stripe_count_dict, output_path)
-    print("saving cooccurrence counts")
+    stripe_count_rdd.saveAsTextFile(output_path)
+    #save_default_dict(stripe_count_dict, output_path)
+    #print("saving cooccurrence counts")
 
 if __name__ == "__main__":
     main()
