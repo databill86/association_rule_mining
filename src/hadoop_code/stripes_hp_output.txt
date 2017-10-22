@@ -1,0 +1,11 @@
+17/10/22 07:46:30 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+17/10/22 07:46:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+packageJobJar: [/home/sarmstr5/hw2/src/map_stripes_counts.py, /home/sarmstr5/hw2/src/reduce_stripes_users.py, /home/sarmstr5/hw2/src/reduce_stripes_cooccurrences.py, /tmp/hadoop-unjar95269851197866385/] [] /tmp/streamjob4000200134117395902.jar tmpDir=null
+17/10/22 07:46:35 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/22 07:46:35 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/22 07:46:40 INFO mapred.FileInputFormat: Total input paths to process : 1
+17/10/22 07:46:40 INFO mapreduce.JobSubmitter: number of splits:2
+17/10/22 07:46:41 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1507601822748_1380
+17/10/22 07:46:41 INFO impl.YarnClientImpl: Submitted application application_1507601822748_1380
+17/10/22 07:46:41 INFO mapreduce.Job: The url to track the job: http://mri-head:8088/proxy/application_1507601822748_1380/
+17/10/22 07:46:41 INFO mapreduce.Job: Running job: job_1507601822748_1380
