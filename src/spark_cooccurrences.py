@@ -53,7 +53,7 @@ def main():
     # need movies as keys and to expand the combinations of movies watched
     # combinations should keep sorted order
     # need (m1, m2), (m1, m4) vice [[u1, (m1,m2,m4)], ...] 
-    movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1], 2)))
+    movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1],2)))
 
     # Count pairs
     stripe_count_rdd = sc.parallelize(((k,v) for k,v in
