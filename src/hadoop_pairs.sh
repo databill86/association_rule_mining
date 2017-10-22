@@ -2,8 +2,8 @@
 # run hadoop pairs process or time it
 
 # input output dirs
-hadoop_input_fn=input/eighth_file.csv
-hadoop_output_fn=output_pairs_8th2
+hadoop_input_fn=input/ratings_processed.csv
+hadoop_output_fn=output_pairs_all
 bast_output_fn=pairs_hp_output.txt
 bash_time_output=pairs_hp_time.txt
 

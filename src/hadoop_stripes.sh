@@ -1,8 +1,8 @@
 #!/bin/bash
 # run hadoop stripes process or time it
 
-hadoop_input_fn=input/quarter_file.csv
-hadoop_output_fn=stripes_output/output_stripes_4th
+hadoop_input_fn=input/ratings_processed.csv
+hadoop_output_fn=stripes_output/output_stripes_ratings_processed1
 bash_output_fn=stripes_hp_output.txt
 bash_time_output=stripes_hp_time.txt
 
