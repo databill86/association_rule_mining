@@ -16,8 +16,9 @@ movies_reviewed = []
 reduce_memory = True
 
 # aggregated all the movies reviewed by user u
-# now emit movie reviewed pairs
-# pairs should be sorted so pair(a,b) is never (b,a)
+# movies should be sorted so key pair {(m1, m4) count_1,4} is never (b,a)
+# reviewed_movies is list => [m1, m2, ...]
+# movies_dict is map of maps =>  {m1:{m2:count2, m4:count4}, ..., m_i:{m_i,j : count_i,j}}
 def add_movies_to_dict(reviewed_movies, movies_dict):
     sorted_movies = sorted(reviewed_movies)
     for i in range(0, len(sorted_movies)):
@@ -34,10 +35,11 @@ def process_input(user, movies):
     m_ids = ast.literal_eval(movies)
     return usr, m_ids
 
+# now emit movie reviewed stripes
 def emit_stripe(stripes_dict):
     for movie_i in stripes_dict.keys():
         print("{}\t{}".format(movie_i, list(stripes_dict[movie_i].items())))
-    
+
 #input from STDIN
 # userid \t movieids [m1, m2, ..]
 for line in sys.stdin:
