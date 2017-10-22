@@ -34,6 +34,26 @@ def save_rdd_to_disk(output_dir, output_fn, rdd):
     #save_default_dict(stripe_count_dict, output_path)
     #print("saving cooccurrence counts")
 
+
+def add_movies_to_dict(sorted_movies, movies_dict):
+    stripes_dict = defaultdict(lambda: defaultdict(int))
+    for i in range(0, len(sorted_movies)):
+        id_i = sorted_movies[i]
+        j_start = i + 1
+        for j in range(j_start, len(sorted_movies)):
+            id_j = sorted_movies[j]
+            movies_dict[id_i][id_j] += 1
+    return movies_dict
+
+# stripe is a list of tups, [(m_2, n_2), (m_j, count_j), ...]
+def increment_stripes(pair_dict, m_i, new_stripe):
+    for tup in new_stripe:
+        m_j = tup[0]
+        count = tup[1]
+        pair = (m_i, m_j)
+        pair_dict[pair] += count
+    return pair_dict
+
 # aggregated all the movies reviewed by user u
 # movies should be sorted so key pair {(m1, m4) count_1,4} is never (b,a)
 # reviewed_movies is list => [m1, m2, ...]
@@ -48,25 +68,11 @@ def create_movie_dict(sorted_movies):
             movies_dict[id_i][id_j] += 1
     return movies_dict
 
-def add_movies_to_dict(sorted_movies, movies_dict):
-    stripes_dict = defaultdict(lambda: defaultdict(int))
-    for i in range(0, len(sorted_movies)):
-        id_i = sorted_movies[i]
-        j_start = i + 1
-        for j in range(j_start, len(sorted_movies)):
-            id_j = sorted_movies[j]
-            movies_dict[id_i][id_j] += 1
-    return movies_dict
-
-
-# stripe is a list of tups, [(m_2, n_2), (m_j, count_j), ...]
-def increment_stripes(pair_dict, m_i, new_stripe):
-    for tup in new_stripe:
-        m_j = tup[0]
-        count = tup[1]
-        pair = (m_i, m_j)
-        pair_dict[pair] += count
-    return pair_dict
+def emit_stripe(stripe_dict):
+    stipe_list = []
+    for movie_i in stripe_dict.keys():
+        strip_list.append((movie_i, list(stripe_dict[movie_i].items())))
+    return strip_list
 
 def main():
     # input parameters
@@ -103,14 +109,19 @@ def main():
     # [(ui, {m_j:{m_k: count_ijk}), ...] count is 1 for all movies
     user_movie_dicts = grouped_users.map(lambda x: (x[0], create_movie_dict(x[1])))
 
-    # need movies as keys and to expand the combinations of movies watched
-    # combinations should keep sorted order
-    # need (m1, m2), (m1, m4) vice [[u1, (m1,m2,m4)], ...] 
-    movie_stripes = user_movie_dicts.map(lambda 
-    x: [ (m_i, list(x[) for
-                                                     in x.keys()]
-    movie_stripes = user_movie_dicts.groupByKey(lambda x: [(k,(v )) for k,v in
-                                                         )
+    # make stripes key pairs
+    # [(m1, {m2:count2, m4:count4}), ...] 
+    movie_stripes = user_movie_dicts.map(lambda x: [(m_i, x[1][m_i]) for m_i in
+                                                     x[1].keys()])
+
+    print(movie_stripes.collect())
+
+if __name__ == "__main__":
+    main()
+
+def somestuff():
+    #lambda x: [ (m_i, list(x[mi])) for rin x.keys()]
+    #movie_stripes = user_movie_dicts.groupByKey(lambda x: [(k,(v )) for k,v in)
 
     # Count pairs
     stripe_count_rdd = sc.parallelize(((k,v) for k,v in
@@ -120,6 +131,3 @@ def main():
     # Output results
     output_dir = "output/spark"
     save_to_disk(output_dir, output_fn, stripe_count_rdd)
-
-if __name__ == "__main__":
-    main()
