@@ -38,7 +38,7 @@ def save_rdd_to_disk(output_dir, output_fn, rdd):
 # movies should be sorted so key pair {(m1, m4) count_1,4} is never (b,a)
 # reviewed_movies is list => [m1, m2, ...]
 # movies_dict is map of maps =>  {m1:{m2:count2, m4:count4}, ..., m_i:{m_i,j : count_i,j}}
-def add_movies_to_dict(sorted_movies):
+def create_movie_dict(sorted_movies):
     movies_dict = defaultdict(lambda: defaultdict(int))
     for i in range(0, len(sorted_movies)):
         id_i = sorted_movies[i]
@@ -100,13 +100,17 @@ def main():
 
     # grouped pairs by users and dictionary [(u1, dict1), ..., (ui,dictj)]
     # Using dictionary (stripes) reduces communication costs
-    # group pairs [(ui, {m_j:{m_k:count_ijk}), ...]
-    grouped_users = user_pairs.groupByKey().map(lambda x: (x[0], sorted(x[1])))
+    # [(ui, {m_j:{m_k: count_ijk}), ...] count is 1 for all movies
+    user_movie_dicts = grouped_users.map(lambda x: (x[0], create_movie_dict(x[1])))
 
     # need movies as keys and to expand the combinations of movies watched
     # combinations should keep sorted order
     # need (m1, m2), (m1, m4) vice [[u1, (m1,m2,m4)], ...] 
-    movie_pairs = grouped_users.flatMap(lambda x: list(itertools.combinations(x[1],2)))
+    movie_stripes = user_movie_dicts.map(lambda 
+    x: [ (m_i, list(x[) for
+                                                     in x.keys()]
+    movie_stripes = user_movie_dicts.groupByKey(lambda x: [(k,(v )) for k,v in
+                                                         )
 
     # Count pairs
     stripe_count_rdd = sc.parallelize(((k,v) for k,v in
