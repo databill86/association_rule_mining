@@ -7,6 +7,9 @@ import itertools
 from collections import defaultdict
 import os
 import csv
+import sys
+
+
 
 def save_default_dict(count_generator, fn):
     with open(fn, 'wb') as output:
@@ -19,7 +22,7 @@ def save_default_dict(count_generator, fn):
 
 def get_abs_file_path(file_dir, fn):
     cur_dir = os.path.abspath(os.curdir)
-    return os.path.normpath(os.path.join(cur_dir, "..", file_dir, fn))
+    return os.path.normpath(os.path.join(cur_dir, "..", "..", file_dir, fn))
 
 def save_to_disk(output_dir, output_fn, rdd):
     output_path = get_abs_file_path(output_dir, output_fn)
@@ -32,9 +35,13 @@ def main():
     conf = SparkConf().setMaster("local").setAppName("spark_cooccurrences.py")
     sc = SparkContext(conf = conf)
 
+    # input parameters
+    input_fn = sys.argv[1]
+    output_fn = sys.argv[2]
+
     # read in file
     input_dir = "data"
-    input_fn = "one_half.csv"
+    #input_fn = "one_half.csv"
     input_file_path = get_abs_file_path(input_dir, input_fn)
     data = sc.textFile(input_file_path)
 
@@ -61,8 +68,7 @@ def main():
     #stripe_count_rdd = sc.parallelize(stripe_count_gen)
 
     # Output results
-    output_dir = "output"
-    output_fn = "one_half"
+    output_dir = "output/spark"
     save_to_disk(output_dir, output_fn, stripe_count_rdd)
 
 if __name__ == "__main__":

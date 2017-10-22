@@ -1,3 +1,10 @@
+Part 0 -- Download and Clean Files
+---------------
+Download file at grouplens
+wget http://files.grouplens.org/datasets/movielens/ml-latest.zip
+extract to programming_dirctory/data
+run preprocessing_make_reviews_binary.py
+
 Part 1 -- Spark and Hadoop
 ---------------
 1.a ) Compute frequency of co-occurrences for movies that recieve "high" ranking from users (e.g. movie a and b recieve high rankings from user 1, 6, and 10)

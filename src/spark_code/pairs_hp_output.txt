@@ -1,0 +1,7 @@
+hadoop: command not found
+#
+#
+# /home/ubuntu/hw2/output/spark/sixteenth.csv
+# /home/ubuntu/hw2/output/spark/sixteenth.csv
+# sixteenth_run
+# sixteenth_run
