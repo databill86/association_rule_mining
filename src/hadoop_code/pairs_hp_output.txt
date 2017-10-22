@@ -1,7 +1,11 @@
-17/10/19 12:52:52 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
-17/10/19 12:52:52 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-packageJobJar: [/home/sarmstr5/hw2/src/map_pair_counts.py, /home/sarmstr5/hw2/src/reduce_pair_users.py, /home/sarmstr5/hw2/src/reduce_pair_cooccurrences.py, /tmp/hadoop-unjar8651997650370403887/] [] /tmp/streamjob8091847700919254008.jar tmpDir=null
-17/10/19 12:52:55 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
-17/10/19 12:52:55 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
-17/10/19 12:52:56 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://mri-head:8020/user/sarmstr5/output_pairs2 already exists
-Streaming Command Failed!
+17/10/22 14:23:51 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.
+17/10/22 14:23:52 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+packageJobJar: [/home/sarmstr5/hw2/src/hadoop_code/map_stripes_counts.py, /home/sarmstr5/hw2/src/hadoop_code/reduce_stripes_users.py, /home/sarmstr5/hw2/src/hadoop_code/reduce_stripes_cooccurrences.py, /tmp/hadoop-unjar3805041490457376837/] [] /tmp/streamjob8159076148807225374.jar tmpDir=null
+17/10/22 14:23:54 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/22 14:23:55 INFO client.RMProxy: Connecting to ResourceManager at mri-head/192.168.1.254:8032
+17/10/22 14:23:58 INFO mapred.FileInputFormat: Total input paths to process : 1
+17/10/22 14:23:58 INFO mapreduce.JobSubmitter: number of splits:2
+17/10/22 14:23:59 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1507601822748_1413
+17/10/22 14:23:59 INFO impl.YarnClientImpl: Submitted application application_1507601822748_1413
+17/10/22 14:23:59 INFO mapreduce.Job: The url to track the job: http://mri-head:8088/proxy/application_1507601822748_1413/
+17/10/22 14:23:59 INFO mapreduce.Job: Running job: job_1507601822748_1413
