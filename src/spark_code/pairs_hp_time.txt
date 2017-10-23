@@ -58,3 +58,78 @@ sys	0m0.012s
 real	1m1.579s
 user	0m0.100s
 sys	0m0.016s
+# 0
+
+real	0m0.006s
+user	0m0.004s
+sys	0m0.000s
+# 0
+
+real	0m0.007s
+user	0m0.004s
+sys	0m0.000s
+# 0
+
+real	0m2.065s
+user	0m0.096s
+sys	0m0.004s
+# 12981743
+
+real	1m31.204s
+user	0m0.112s
+sys	0m0.004s
+# 624714
+
+real	0m25.311s
+user	0m0.092s
+sys	0m0.012s
+# 624714
+
+real	0m0.079s
+user	0m0.076s
+sys	0m0.000s
+# 624714
+
+real	0m0.077s
+user	0m0.072s
+sys	0m0.004s
+# 624714
+
+real	0m0.010s
+user	0m0.008s
+sys	0m0.000s
+# 624714
+
+real	0m25.213s
+user	0m0.104s
+sys	0m0.008s
+# 624714
+
+real	0m0.017s
+user	0m0.016s
+sys	0m0.000s
+# 624714
+
+real	0m0.019s
+user	0m0.016s
+sys	0m0.000s
+# 624714
+
+real	0m0.018s
+user	0m0.016s
+sys	0m0.000s
+# 624714
+
+real	0m0.028s
+user	0m0.004s
+sys	0m0.004s
+# 624714
+
+real	0m0.115s
+user	0m0.048s
+sys	0m0.004s
+# 624714
+
+real	0m28.894s
+user	0m0.072s
+sys	0m0.004s

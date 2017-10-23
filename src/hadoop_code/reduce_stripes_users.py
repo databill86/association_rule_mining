@@ -13,7 +13,7 @@ stripes_dict = defaultdict(lambda: defaultdict(int))
 current_user = None
 last_user = None
 movies_reviewed = []
-reduce_memory = True
+reduce_memory = False
 
 # aggregated all the movies reviewed by user u
 # movies should be sorted so key pair {(m1, m4) count_1,4} is never (b,a)
