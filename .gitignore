@@ -1,3 +1,4 @@
 data/*
 output/*
 test_input/ratings_small_processed.csv
+hydra_output/*
