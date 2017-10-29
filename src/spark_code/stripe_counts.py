@@ -36,8 +36,11 @@ def save_rdd_to_disk(output_dir, output_fn, rdd):
 
 # stripe is a list of tups, [(m_2, n_2), (m_j, count_j), ...]
 def increment_stripes(stripe_x, stripe_y):
+    print(stripe_x)
+    print(stripe_y)
     x = Counter(stripe_x)
     y = Counter(stripe_y)
+    print(x+y)
     return dict(x+y)
 
 # aggregated all the movies reviewed by user u
@@ -63,10 +66,9 @@ def create_stripe(stripe_dict):
 def convert_stripes_to_tups(movie_i, stripe):
     return [((movie_i, movie_j), count) for movie_j, count in stripe.items()]
 
-
 def main():
     # input parameters
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 3:
         print("you didnt give directory inputs, using test file")
         input_dir = "test_input"
         input_fn = "ratings_tiny_processed.csv"
@@ -74,15 +76,14 @@ def main():
         output_fn="test"
     else:
         input_fn = sys.argv[1]
-        output_prob_fn = sys.argv[2]
-        output_lift_fn = sys.argv[3]
+        output_fn = sys.argv[2]
         input_dir = "data"
         input_file_path = get_abs_file_path(input_dir, input_fn)
 
     # initialize spark
     conf = SparkConf().setMaster("local").setAppName("spark_cooccurrences.py")
-    conf.setExectorMemory("3g")
-    conf.setExecutorCores( 6)
+    conf.set("spark.executor.memory", "3g")
+    conf.set("spark.executor.cores", 2)
     sc = SparkContext(conf = conf)
 
     # read in file
@@ -91,9 +92,6 @@ def main():
     # take out header
     header = data.first()
     data = data.filter(lambda x: x != header)
-
-    # int, dont count header
-    n_reviews = data.count() - 1 
 
     # need to convert list of strings to key value pairs
     #[[u1, mi], ..]
@@ -112,42 +110,38 @@ def main():
     # make key pairs of movie_i, stripe_i
     # [(movie_i, stripe_i), ...]
     movie_stripes = user_movie_dicts.flatMap(lambda x: create_stripe(x[1]))
+    print("this is movie_stripes: {}\n-----------\n".format(movie_stripes.collect()))
 
     # aggregate stripes and sum counts
     # [(m1, {m2:count2, m4:count4}), ...] 
     combined_stripes = movie_stripes.reduceByKey(lambda x,y:
                                               increment_stripes(x,y))
+    print("this is combined_stripes: {}\n-----------\n".format(combined_stripes.collect()))
 
     # convert to pair values and print
     # (mi, mj), count
-    counts = combined_stripes.flatMap(lambda (m_i, stripe): convert_stripes_to_tups(m_i, stripe))
+    counts = combined_stripes.flatMap(lambda x: convert_stripes_to_tups(x[0],
+                                                                        x[1]))
 
-    # Count pairs, default_dict type
-    stripe_count_dict = movie_pairs.countByValue()
-
-    # first creat a list of keys, [(A,B), ..]
-    keys_rdd = sc.parallelize(stripe_count_dict.keys()).cache()
-
-    # p(a|b) := p(a&b)/p(b) = |a&b|/|b| <- magnitudes or counts
-    # Perform calc P(A|B)
-    conditional_probs_rdd = keys_rdd.map(lambda k: (k, float(stripe_count_dict[k]) /
-                                       movie_counts_dict[k[1]]))
-
-    trimmed_conditionals = conditional_probs_rdd.filter(lambda x: x[1] < 0.8)
-
-    # lift(A&B) := P(A&B)/P(A) = |A&B|/|A| <- magnitudes or counts
-    # Perform lift calc P(A&B)/P(A)
-    lift_rdd = keys_rdd.map(lambda k: (k, float(stripe_count_dict[k]) /
-                                       movie_counts_dict[k[0]]))
-
-    trimmed_lift = conditional_probs_rdd.filter(lambda x: x[1] > 1.6)
+    print("this is combined_stripes: {}\n-----------\n".format(counts.collect()))
 
     # Output results
     output_dir = "output/spark"
-    save_rdd_to_disk(output_dir, output_prob_fn, trimmed_conditionals)
-    save_rdd_to_disk(output_dir, output_lift_fn, trimmed_lift)
+    save_rdd_to_disk(output_dir, output_fn, counts)
 
 
 if __name__ == "__main__":
     main()
+
+def somestuff():
+    for k,v in combined_stripes.iteritems():
+        print(k)
+        print(v)
+    #lambda x: [ (m_i, list(x[mi])) for rin x.keys()]
+    #movie_stripes = user_movie_dicts.groupByKey(lambda x: [(k,(v )) for k,v in)
+
+    # Count pairs
+    stripe_count_rdd = sc.parallelize(((k,v) for k,v in
+                                       movie_pairs.countByValue().iteritems()))
+    #stripe_count_rdd = sc.parallelize(stripe_count_gen)
 
